@@ -1,0 +1,24 @@
+h2{
+    text-align: center;
+}
+
+.mainContainer{
+    height:150px;
+}
+
+.container {
+    display: flex;
+    justify-content:center;
+}
+
+.box {
+    width: 100px;
+    height: 50px;
+    margin-right: 100px;
+}
+
+.buttonContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
