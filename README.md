@@ -9,3 +9,5 @@ node app.js
 
 
 control + shift + p -> SQLite: Open Database -> Choose your database -> open "SQLITE EXPLORER" on bottom left of screen -> look for your table -> right click table -> "Show table"
+
+testing
