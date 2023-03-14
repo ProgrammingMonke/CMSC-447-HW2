@@ -17,59 +17,57 @@ function createUser(){
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(newData)
     };
-    fetch(`/api`, options).then(result => {
-        console.log('success')
+    fetch('/api', options).then(result => {
+        console.log('createUser success')
     });
 }
 
-function searchUser(){
-    let myArray = []; // initialize an empty array
-
-    // Get username, and id data from textboxes
-    let username = document.getElementById("searchUser-name").value;
-    if (username !== "") {myArray.push(username);}
-    let id = document.getElementById("searchUser-id").value;
-    if (id !== "") {myArray.push(id);}
-  
-    // log the array to the console for testing
-    console.log(myArray);
+function searchUser(){ //GET
+    // Get id data from textbox
+    let ID = document.getElementById("searchUser-id").value;
+    if (ID !== ""){
+        let newData = {id:ID};
+        const options = {
+            method: 'GET',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(newData)
+        };
+        fetch('/api', options).then(result => {
+            console.log('searchUser success')
+        });
+    }
+    else{
+        console.log('searchUser failed; enter some input')
+    }
 }
 
 function deleteUser(){
-    let myArray = []; // initialize an empty array
-
-    // Get username, and id data from textboxes
-    let username = document.getElementById("deleteUser-name").value;
-    if (username !== "") {myArray.push(username);}
-    let id = document.getElementById("deleteUser-id").value;
-    if (id !== "") {myArray.push(id);}
-  
-    // log the array to the console for testing
-    console.log(myArray);
+    // Get id data from textbox
+    let ID = document.getElementById("deleteUser-id").value;
+    if (ID !== ""){
+        let newData = {id:ID};
+        const options = {
+            method: 'DELETE',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(newData)
+        };
+        fetch('/api', options).then(result => {
+            console.log('deleteUser success')
+        });
+    }
+    else{
+        console.log('deleteUser failed; enter some input')
+    }
 }
 
-function retrievePoints(){
-    let myArray = []; // initialize an empty array
-
-    // Get username, and id data from textboxes
-    let username = document.getElementById("retrievePoints-name").value;
-    if (username !== "") {myArray.push(username);}
-    let id = document.getElementById("retrievePoints-id").value;
-    if (id !== "") {myArray.push(id);}
-  
-    // log the array to the console for testing
-    console.log(myArray);
-}
 
 
 // Grant button functionality
 let createUserButton = document.getElementById("createUser-button");
 let searchUserButton = document.getElementById("searchUser-button");
 let deleteUserButton = document.getElementById("deleteUser-button");
-let retrievePointsButton = document.getElementById("retrievePoints-button");
 
 // Buttons wait until they're clicked
 createUserButton.addEventListener("click", createUser);
 searchUserButton.addEventListener("click", searchUser);
 deleteUserButton.addEventListener("click", deleteUser);
-retrievePointsButton.addEventListener("click", retrievePoints);

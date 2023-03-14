@@ -22,8 +22,12 @@ app.get('/',function(req,res){
 app.get('/style.css',function(req,res){
     res.sendFile(path.join(public,'style.css'),{headers:{'Content-Type': 'text/css'}});
 });
-
-
+app.get('/script.js',function(req,res){
+    res.sendFile(path.join(public,'script.js'));
+});
+app.get('/table.js',function(req,res){
+    res.sendFile(path.join(public,'table.js'));
+});
 // Create table (only if not already existing)
 sql = 'CREATE TABLE IF NOT EXISTS people(name,id,points)';
 db.run(sql);
@@ -64,39 +68,40 @@ app.post('/api',(req,res) =>{
     const params = [userData.name, userData.id, userData.points];
     db.run(sql,params,(err)=>{
         if(err) return console.error(err.message);
-        console.log(`A row has been inserted with rowid ${this.lastID}`);
+        console.log(`A row has been inserted with rowid ${userData.id}`);
         res.send(`User data for ${userData.name} has been inserted.`);
     });
 });
 
 // Read user data from database
-function searchUser(){
-    sql = 'READ FROM users WHERE id = ?';
-    db.run(sql,[2],(err) => {
-        if(err) return console.error(err.message);
-    });
-}
-
-// Deletes user from database
-function deleteUser(){
-    sql = 'DELETE FROM users WHERE id = ?';
-    db.run(sql,[2],(err) => {
-        if(err) return console.error(err.message);
-    });
-}
-
-// Query the database
-function queryDB(){
+app.get('/api',(req,res) =>{
     sql = 'SELECT * FROM people';
     db.all(sql,[],(err,rows)=>{
         if(err) return console.error(err.message);
-        rows.forEach((row) => {
-            console.log(row);
-        })
+        res.json(rows);
     });
-}
 
-queryDB();
+    // const userData = req.body; // get user data from request body
+    // sql = 'READ FROM users WHERE id = ?';
+    // db.run(sql,userData["id"],(err)=>{
+    //     if(err) return console.error(err.message);
+    //     console.log(`A row has been read with rowid ${userData["id"]}`);
+    //     res.send(`User data has been read.`);
+    // });
+});
+
+
+// Deletes user from database
+app.delete('/api',(req,res) =>{
+    const userData = req.body; // get user data from request body
+    sql = 'DELETE FROM people WHERE id = ?';
+    db.run(sql,userData["id"],(err)=>{
+        if(err) return console.error(err.message);
+        console.log(`A row has been deleted with rowid ${userData["id"]}`);
+        res.send(`User data has been deleted.`);
+    });
+});
+
 // use the http module to create an http server listening on the specified port
 http.createServer(app).listen(port, () =>{
     console.log(`see the magic at: http://localhost:${port}`)

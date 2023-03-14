@@ -4,7 +4,6 @@
         <meta charset="utf-8">
         <title>CMSC 447 HW 2</title>
         <link rel="stylesheet" href="style.css">
-        <script type = "module" src="script.js"></script>
     </head>
     <body>
         <h1 style = "text-align: center;">Franco Maxey's Homework 2 - CRUD</h1>
@@ -38,11 +37,7 @@
             <div class ="mainContainer">
                 <h2>Search User</h2>
                 <div class="container">
-                    <div class = "box">            
-                        <label for="name">Name:</label><br>
-                        <input type="text" id="searchUser-name" name="fullName" placeholder = "e.g. John Smith"><br>
-                    </div>
-                    <div sclass = "box"> 
+                    <div class = "box"> 
                         <label for="id">Id:</label><br>
                         <input type="text" id="searchUser-id" name="id"placeholder = "e.g. 122"><br>
                     </div>
@@ -58,11 +53,7 @@
             <div class ="mainContainer">
                 <h2>Delete User</h2>
                 <div class="container">
-                    <div class = "box">            
-                        <label for="name">Name:</label><br>
-                        <input type="text" id="deleteUser-name" name="fullName" placeholder = "e.g. John Smith"><br>
-                    </div>
-                    <div sclass = "box"> 
+                    <div class = "box"> 
                         <label for="id">Id:</label><br>
                         <input type="text" id="deleteUser-id" name="id" placeholder = "e.g. 122"><br>
                     </div>
@@ -72,25 +63,7 @@
                 </div>
             </div>
         </form>
-
-        <!-- Retrieve Points Form -->
-        <form>
-            <div class = "mainContainer">
-                <h2>Retrieve Points from User</h2>
-                <div class="container">
-                    <div class = "box">            
-                        <label for="name">Name:</label><br>
-                        <input type="text" id="retrievePoints-name" name="fullName" placeholder = "e.g. John Smith"><br>
-                    </div>
-                    <div sclass = "box"> 
-                        <label for="id">Id:</label><br>
-                        <input type="text" id="retrievePoints-id" name="id" placeholder = "e.g. 122"><br>
-                    </div>
-                </div>
-                <div class = "buttonContainer">
-                    <button type="button" id="retrievePoints-button">Retrieve</button>
-                </div>
-            </div>
-        </form>
+        <script type = "module" src="/script.js"></script>
+        <script type = "module" src="/table.js"></script>
     </body>
 </html>
