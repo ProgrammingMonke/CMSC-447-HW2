@@ -1,18 +1,25 @@
 
 // Get user input for createUser, and format it into json format
 function createUser(){
-    let myArray = []; // initialize an empty array
+    let data = []; // initialize an empty array
     
     // Get username, id, and points data from textboxes
     let username = document.getElementById("createUser-name").value;
-    if (username !== "") {myArray.push(username);}
+    if (username !== "") {data.push(username);}
     let id = document.getElementById("createUser-id").value;
-    if (id !== "") {myArray.push(id);}
+    if (id !== "") {data.push(id);}
     let points = document.getElementById("createUser-points").value;
-    if (points !== "") {myArray.push(points);}
-  
-    // log the array to the console for testing
-    console.log(myArray);
+    if (points !== "") {data.push(points);}
+
+    let newData = {name:data[0],id:data[1],points:data[2]};
+    const options = {
+        method: 'POST',
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(newData)
+    };
+    fetch(`/api`, options).then(result => {
+        console.log('success')
+    });
 }
 
 function searchUser(){
