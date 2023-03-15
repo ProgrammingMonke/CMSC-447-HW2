@@ -15,10 +15,10 @@ const db = new sqlite3.Database('./data.db',sqlite3.OPEN_READWRITE,(err)=>{
     if(err) return console.error(err.message);
 });
 
+// Link html, css, and js files
 app.get('/',function(req,res){
     res.sendFile(path.join(public,'index.html'));
 });
-
 app.get('/style.css',function(req,res){
     res.sendFile(path.join(public,'style.css'),{headers:{'Content-Type': 'text/css'}});
 });
@@ -74,21 +74,21 @@ app.post('/api',(req,res) =>{
 });
 
 // Read user data from database
-app.get('/api',(req,res) =>{
-    sql = 'SELECT * FROM people';
-    db.all(sql,[],(err,rows)=>{
-        if(err) return console.error(err.message);
-        res.json(rows);
+app.get('/users/:id', (req, res) => {
+    const userId = req.params.id;
+    // query the database for the user with the specified ID
+    db.get('SELECT * FROM people WHERE id = ?', [userId], (err, row) => {
+      if (err) {
+        console.error(err.message);
+        res.status(500).send('Internal Server Error');
+      } else if (!row) {
+        res.json({name:'null'});
+      } else {
+        // send the user data as a JSON response
+        res.json(row);
+      }
     });
-
-    // const userData = req.body; // get user data from request body
-    // sql = 'READ FROM users WHERE id = ?';
-    // db.run(sql,userData["id"],(err)=>{
-    //     if(err) return console.error(err.message);
-    //     console.log(`A row has been read with rowid ${userData["id"]}`);
-    //     res.send(`User data has been read.`);
-    // });
-});
+  });
 
 
 // Deletes user from database
