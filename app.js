@@ -28,6 +28,7 @@ app.get('/script.js',function(req,res){
 app.get('/table.js',function(req,res){
     res.sendFile(path.join(public,'table.js'));
 });
+
 // Create table (only if not already existing)
 sql = 'CREATE TABLE IF NOT EXISTS people(name,id,points)';
 db.run(sql);
@@ -73,7 +74,7 @@ app.post('/api',(req,res) =>{
     });
 });
 
-// Read user data from database
+// Read user data by ID
 app.get('/users/:id', (req, res) => {
     const userId = req.params.id;
     // query the database for the user with the specified ID
@@ -90,6 +91,17 @@ app.get('/users/:id', (req, res) => {
     });
   });
 
+// Read ALL user data
+app.get('/user/query', (req, res) => {
+    db.all('SELECT * FROM people', [], (err, rows) => {
+        if (err) {
+            console.error(err.message);
+            res.status(500).send(err.message);
+        } else {
+            res.json(rows);
+        }
+    });
+});
 
 // Deletes user from database
 app.delete('/api',(req,res) =>{
@@ -104,5 +116,5 @@ app.delete('/api',(req,res) =>{
 
 // use the http module to create an http server listening on the specified port
 http.createServer(app).listen(port, () =>{
-    console.log(`see the magic at: http://localhost:${port}`)
+    console.log(`View website at: http://localhost:${port}`)
 })

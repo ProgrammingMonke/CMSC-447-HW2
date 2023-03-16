@@ -20,6 +20,7 @@ function createUser(){
     fetch('/api', options).then(result => {
         console.log('createUser success')
     });
+    location.reload(); // Reload page to update table
 }
 
 function searchUser(){ //GET
@@ -67,8 +68,75 @@ function deleteUser(){
     else{
         console.log('deleteUser failed; enter some input')
     }
+    location.reload(); // Reload page to update table
 }
 
+function generateTable(){
+     // Empty out the old table
+    let tableBody = document.querySelector("#mytable tbody");
+    tableBody.innerHTML = "";
+    fetch('/user/query')
+        .then(response => response.json())
+        .then(rows => {
+            // Create a new HTML table element
+            let table = document.createElement("table");
+            table.setAttribute("border", "2");
+
+            // Create the table header row
+            let headerRow = document.createElement("tr");
+
+            // Create the "Name" column header
+            let nameHeader = document.createElement("th");
+            nameHeader.textContent = "Name";
+            headerRow.appendChild(nameHeader);
+
+            // Create the "ID" column header
+            let idHeader = document.createElement("th");
+            idHeader.textContent = "ID";
+            headerRow.appendChild(idHeader);
+
+            // Create the "Points" column header
+            let pointsHeader = document.createElement("th");
+            pointsHeader.textContent = "Points";
+            headerRow.appendChild(pointsHeader);
+
+            // Add the header row to the table
+            table.appendChild(headerRow);
+            // Loop through the rows in the result set and create a table row for each row
+            // console.log(rows);
+            for (let i = 0; i < rows.length; i++) {
+                // Get the current row data
+                let row = rows[i];
+                
+                // Create a new table row
+                let rowElement = document.createElement("tr");
+
+                // Create the "Name" column cell
+                let nameCell = document.createElement("td");
+                nameCell.textContent = row.name;
+                rowElement.appendChild(nameCell);
+
+                // Create the "ID" column cell
+                let idCell = document.createElement("td");
+                idCell.textContent = row.id;
+                rowElement.appendChild(idCell);
+
+                // Create the "Points" column cell
+                let pointsCell = document.createElement("td");
+                pointsCell.textContent = row.points;
+                rowElement.appendChild(pointsCell);
+
+                // Add the row to the table
+                table.appendChild(rowElement);
+        }
+        // Find the tbody element in the existing HTML file
+        let tbody = document.querySelector("#mytable tbody");
+
+        // Append the table to the tbody element
+        tbody.appendChild(table);
+        })
+        .catch(error => console.error(error));
+}
 
 
 // Grant button functionality
@@ -80,3 +148,5 @@ let deleteUserButton = document.getElementById("deleteUser-button");
 createUserButton.addEventListener("click", createUser);
 searchUserButton.addEventListener("click", searchUser);
 deleteUserButton.addEventListener("click", deleteUser);
+
+window.onload = generateTable; // Load the table on page refresh
